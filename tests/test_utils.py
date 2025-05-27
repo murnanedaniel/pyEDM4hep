@@ -167,9 +167,9 @@ EXPECTED_EVENT_DATA_KEYS = [
 
 
 @pytest.mark.parametrize("event_idx", [0]) # Test with the first event
-def test_load_event_data_structure(sample_edm4hep_file, event_idx):
+def test_load_event_data_structure(sample_event_file_path, event_idx):
     """Test the structure and types of data returned by load_event_data."""
-    data = load_event_data(sample_edm4hep_file, event_idx)
+    data = load_event_data(sample_event_file_path, event_idx)
 
     assert data is not None, "load_event_data returned None"
     assert isinstance(data, dict), "Data is not a dictionary"
@@ -208,11 +208,15 @@ def test_load_event_data_structure(sample_edm4hep_file, event_idx):
         assert set(EXPECTED_CALO_CONTRIBUTION_COLUMNS).issubset(data['calo_contributions'].columns), \
             f"Missing columns in calo_contributions_df. Expected subset: {EXPECTED_CALO_CONTRIBUTION_COLUMNS}, Got: {list(data['calo_contributions'].columns)}"
     
+    # Check for specific dtypes if necessary, e.g.:
+    # if not data['particles'].empty:
+    #     assert data['particles']['PDG'].dtype == np.int32
 
-def test_load_event_data_invalid_event(sample_edm4hep_file):
-    """Test that load_event_data returns None for an obviously invalid event index."""
+def test_load_event_data_invalid_event(sample_event_file_path):
+    """Test loading an event index that is out of bounds."""
+    # First, determine a valid number of events in the file
     # Assuming any EDM4HEP file will have fewer than 999999 events
-    data = load_event_data(sample_edm4hep_file, 999999) 
+    data = load_event_data(sample_event_file_path, 999999) 
     assert data is None, "load_event_data should return None for a very large event index"
 
 # More specific tests for _build_particle_df, _process_single_tracker, etc.

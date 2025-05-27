@@ -3,19 +3,19 @@ from pyedm4hep import EDM4hepDataset # Corrected casing: EDM4hepDataset instead 
 from pyedm4hep import EDM4hepEvent
 
 # Assume fixtures from conftest.py:
-# - sample_root_file_path: Path to a ROOT file with multiple events for dataset testing.
+# - sample_event_file_path: Path to a ROOT file with multiple events for dataset testing.
 # - sample_detector_params: Detector parameters for event loading.
 
 @pytest.fixture
-def dataset_instance(sample_root_file_path, sample_detector_params):
+def dataset_instance(sample_event_file_path, sample_detector_params):
     """Fixture to create an EDM4HepDataset instance."""
     # Adjust initialization based on actual EDM4HepDataset constructor
-    return EDM4hepDataset(file_path=sample_root_file_path, detector_params=sample_detector_params)
+    return EDM4hepDataset(file_path=sample_event_file_path, detector_params=sample_detector_params)
 
-def test_dataset_initialization(dataset_instance, sample_root_file_path):
+def test_dataset_initialization(dataset_instance, sample_event_file_path):
     """Test basic initialization of EDM4HepDataset."""
     assert dataset_instance is not None
-    assert dataset_instance.file_path == sample_root_file_path
+    assert dataset_instance.file_path == sample_event_file_path
     # Add assertions for other initial properties, e.g., number of events if known by dataset upon init
 
 def test_dataset_len(dataset_instance):

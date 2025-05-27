@@ -93,6 +93,94 @@ def sample_particle_id(sample_event_with_particles):
 
     return chosen_particle_id
 
+# Fixtures for test_decay.py
+@pytest.fixture(scope="session")
+def sample_event_for_decay_tests(sample_event_for_tests):
+    """Event fixture for decay tests. For now, reuses sample_event_for_tests (event 0)."""
+    # Later, you can make this load a different event index if event 0 is not ideal for decay tests.
+    # from pyedm4hep import EDM4hepEvent
+    # event = EDM4hepEvent(file_path=sample_event_file_path, event_index=SPECIFIC_EVENT_FOR_DECAY, detector_params=sample_detector_params)
+    # event.decay.process_decay_tree() # Ensure tree is processed if tests depend on it
+    # return event
+    return sample_event_for_tests 
+
+@pytest.fixture(scope="session")
+def sample_particle_id_for_decay(sample_particle_id):
+    """Particle ID for decay tests. For now, reuses sample_particle_id.
+    IMPORTANT: Ensure this particle ID is suitable for testing decay chains in the event 
+    loaded by sample_event_for_decay_tests.
+    """
+    # chosen_particle_id_for_decay = YOUR_ACTUAL_ID_FOR_DECAY_TESTS
+    # return chosen_particle_id_for_decay
+    return sample_particle_id # Placeholder: assumes the general sample_particle_id is also good for decay tests
+
+# Fixtures for test_hits.py
+@pytest.fixture(scope="session")
+def sample_event_with_hits(sample_event_for_tests):
+    """Event fixture for hit tests. For now, reuses sample_event_for_tests (event 0)."""
+    # Later, ensure this event (e.g., event 0) has various hits for testing.
+    return sample_event_for_tests
+
+@pytest.fixture(scope="session")
+def sample_tracker_hit_global_id(sample_event_with_hits):
+    """Global ID of a tracker hit for testing.
+    IMPORTANT: Inspect event from sample_event_with_hits and pick a VALID tracker hit ID.
+    """
+    # === ACTION REQUIRED: REPLACE THIS LOGIC ===
+    tracker_hits_df = sample_event_with_hits.get_tracker_hits_df()
+    if not tracker_hits_df.empty:
+        # Example: Pick the first tracker hit. Replace with a specific, known good ID.
+        return tracker_hits_df.index[0] 
+    pytest.fail(f"No tracker hits found in event {sample_event_with_hits.event_index} for sample_tracker_hit_global_id fixture.")
+    return None 
+
+@pytest.fixture(scope="session")
+def sample_calo_hit_global_id(sample_event_with_hits):
+    """Global ID of a calorimeter hit for testing.
+    IMPORTANT: Inspect event from sample_event_with_hits and pick a VALID calo hit ID.
+    """
+    # === ACTION REQUIRED: REPLACE THIS LOGIC ===
+    calo_hits_df = sample_event_with_hits.get_calo_hits_df()
+    if not calo_hits_df.empty:
+        # Example: Pick the first calo hit. Replace with a specific, known good ID.
+        return calo_hits_df.index[0] 
+    pytest.fail(f"No calo hits found in event {sample_event_with_hits.event_index} for sample_calo_hit_global_id fixture.")
+    return None
+
+@pytest.fixture(scope="session")
+def sample_calo_contribution_global_id(sample_event_with_hits):
+    """Global ID of a calo contribution for testing.
+    IMPORTANT: Inspect event from sample_event_with_hits and pick a VALID calo contribution ID.
+    """
+    # === ACTION REQUIRED: REPLACE THIS LOGIC ===
+    contrib_df = sample_event_with_hits.get_calo_contributions_df()
+    if not contrib_df.empty:
+        # Example: Pick the first contribution. Replace with a specific, known good ID.
+        return contrib_df.index[0]
+    pytest.fail(f"No calo contributions found in event {sample_event_with_hits.event_index} for sample_calo_contribution_global_id fixture.")
+    return None
+
+# Fixtures for test_plotting.py
+@pytest.fixture(scope="session")
+def sample_event_for_plotting(sample_event_for_tests):
+    """Event fixture for plotting tests. For now, reuses sample_event_for_tests (event 0)."""
+    # Ensure this event has detector_params and is suitable for various plots.
+    # from pyedm4hep import EDM4hepEvent
+    # event = EDM4hepEvent(file_path=sample_event_file_path, event_index=SPECIFIC_EVENT_FOR_PLOTTING, detector_params=sample_detector_params)
+    # event.decay.process_decay_tree() # Optional
+    # return event
+    return sample_event_for_tests
+
+@pytest.fixture(scope="session")
+def sample_particle_id_for_plotting(sample_particle_id):
+    """Particle ID for plotting tests. For now, reuses sample_particle_id.
+    IMPORTANT: Ensure this particle is suitable for plotting within the event 
+    loaded by sample_event_for_plotting.
+    """
+    # chosen_particle_id_for_plotting = YOUR_ACTUAL_ID_FOR_PLOTTING_TESTS
+    # return chosen_particle_id_for_plotting
+    return sample_particle_id # Placeholder
+
 # You would then define other fixtures like:
 # sample_event_with_particles, sample_particle_id,
 # sample_event_with_hits, sample_tracker_hit_global_id, etc.
