@@ -1,5 +1,5 @@
 import pytest
-from pyedm4hep import EDM4HepDataset # Assuming this is the main class in dataset.py
+from pyedm4hep import EDM4hepDataset # Corrected casing: EDM4hepDataset instead of EDM4HepDataset
 from pyedm4hep import EDM4hepEvent
 
 # Assume fixtures from conftest.py:
@@ -10,7 +10,7 @@ from pyedm4hep import EDM4hepEvent
 def dataset_instance(sample_root_file_path, sample_detector_params):
     """Fixture to create an EDM4HepDataset instance."""
     # Adjust initialization based on actual EDM4HepDataset constructor
-    return EDM4HepDataset(file_path=sample_root_file_path, detector_params=sample_detector_params)
+    return EDM4hepDataset(file_path=sample_root_file_path, detector_params=sample_detector_params)
 
 def test_dataset_initialization(dataset_instance, sample_root_file_path):
     """Test basic initialization of EDM4HepDataset."""
