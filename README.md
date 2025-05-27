@@ -1,5 +1,8 @@
 # PyEDM4hep Library Plan
 
+[![codecov](https://codecov.io/gh/murnanedaniel/pyEDM4hep/graph/badge.svg?token=JD9R3LYXH0)](https://codecov.io/gh/murnanedaniel/pyEDM4hep) 
+<!-- Add other badges here, e.g., PyPI version, license, build status -->
+
 This document outlines the plan for a Python library, `pyedm4hep`, designed to provide an object-oriented interface to EDM4hep data while leveraging the performance of Pandas DataFrames for bulk operations.
 
 ## Goal
@@ -181,6 +184,7 @@ if event0 and event1:
 
     except IndexError as e:
         print(f"Error finding matching particle: {e}")
+```
 
 ## Core Design: Hybrid OOP + Pandas Backend
 
